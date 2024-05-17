@@ -13,5 +13,15 @@ namespace GildedRose
             app.UpdateQuality();
             Assert.That("foo", Is.EqualTo(Items[0].Name));
         }
+
+        [Test]
+        public void CheckWhatAgedBrieDoes()
+        {
+            IList<Item> Items = new List<Item> { new Item { Name = "Aged Brie", SellIn = 10, Quality = 5 } };
+            GildedRose app = new GildedRose(Items);
+            app.UpdateQuality();
+            Assert.That(9, Is.EqualTo(Items[0].SellIn));
+            Assert.That(6, Is.EqualTo(Items[0].Quality));
+        }
     }
 }
