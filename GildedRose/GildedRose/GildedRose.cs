@@ -3,8 +3,6 @@
     public class GildedRose(IList<Item> Items)
     {
         IList<Item> Items = Items;
-        private static int LOWEST_QUALITY_VALUE = 0;
-        private static int HIGHEST_QUALITY_VALUE = 50;
 
         public void UpdateQuality()
         {
@@ -70,11 +68,6 @@
 
                 Items[i] = currentItem;
             }
-        }
-
-        private static bool IsItemQualityGreaterThanLowestQuality(int itemQuality)
-        {
-            return itemQuality > LOWEST_QUALITY_VALUE;
         }
     }
 }
