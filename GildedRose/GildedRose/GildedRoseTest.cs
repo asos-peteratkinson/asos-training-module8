@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 using System;
 
 namespace GildedRose
@@ -13,6 +14,16 @@ namespace GildedRose
             GildedRose app = new GildedRose(Items);
             app.UpdateQuality();
             Assert.That("foo", Is.EqualTo(Items[0].Name));
+        }
+
+        [Test]
+        public void FooIsLegendary()
+        {
+            var item = new Item { Name = "foo", SellIn = 0, Quality = 1 };
+            IList<Item> Items = new List<Item> { item };
+
+            var isLegendary = item.IsNotLegendary();
+            Assert.That(isLegendary, Is.True);
         }
 
         [Test]

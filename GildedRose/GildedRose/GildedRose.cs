@@ -14,14 +14,14 @@
 
                 if (!currentItem.IsAgedBrie() && !currentItem.IsBackstagePasses())
                 {
-                    if (IsNotLegendaryItem(currentItem))
+                    if (currentItem.IsNotLegendary())
                     {
                         currentItem.DecreaseQuality();
                     }
                 }
                 else
                 {
-                    if (currentItem.Quality < HIGHEST_QUALITY_VALUE)
+                    if (currentItem.IsLessThanHighestQuality())
                     {
                         currentItem.IncreaseQuality();
 
@@ -47,7 +47,7 @@
                 {
                     if (currentItem.IsAgedBrie())
                     {
-                        if (currentItem.Quality < HIGHEST_QUALITY_VALUE)
+                        if (currentItem.IsLessThanHighestQuality())
                         {
                             currentItem.IncreaseQuality();
                         }
@@ -57,7 +57,7 @@
 
                     if (!currentItem.IsBackstagePasses())
                     {
-                        if (IsNotLegendaryItem(currentItem))
+                        if (currentItem.IsNotLegendary())
                         {
                             currentItem.DecreaseQuality();
                         }
@@ -75,11 +75,6 @@
         private static bool IsItemQualityGreaterThanLowestQuality(int itemQuality)
         {
             return itemQuality > LOWEST_QUALITY_VALUE;
-        }
-
-        private static bool IsNotLegendaryItem(Item item)
-        {
-            return IsItemQualityGreaterThanLowestQuality(item.Quality) && !item.IsSulfuras();
         }
     }
 }

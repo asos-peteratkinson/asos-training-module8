@@ -11,7 +11,7 @@
             return this.Name + ", " + this.SellIn + ", " + this.Quality;
         }
 
-        public bool IsLegendary() => IsLessThanHighestQuality() && IsSulfuras();
+        public bool IsNotLegendary() => IsGreaterThanLowestQualtity() && !IsSulfuras();
 
         public bool IsAgedBrie() => Name == ItemValues.AgedBrie;
 
@@ -21,7 +21,19 @@
 
         public void IncreaseQuality() => Quality += 1;
 
-        public void DecreaseQuality() => Quality -= 1;
+        public void DecreaseQuality()
+        {
+            if(IsConjured())
+            {
+                Quality -= 2;
+            }
+            else
+            {
+                Quality -= 1;
+            }
+        }
+
+        private bool IsConjured() => Name == ItemValues.ConjuredManaCake;
 
         public void ResetQuality() => Quality = 0;
 
