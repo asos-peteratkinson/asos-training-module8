@@ -1,101 +1,85 @@
 ﻿namespace GildedRose
 {
-    public class GildedRose
+    public class GildedRose(IList<Item> Items)
     {
-        private const string AgedBrie = "Aged Brie";
-        private const string BackStagePasses = "Backstage passes to a TAFKAL80ETC concert";
-        private const string Sulfuras = "Sulfuras, Hand of Ragnaros";
-
-        IList<Item> Items;
+        IList<Item> Items = Items;
         private static int LOWEST_QUALITY_VALUE = 0;
         private static int HIGHEST_QUALITY_VALUE = 50;
-
-        public GildedRose(IList<Item> Items)
-        {
-            this.Items = Items;
-        }
 
         public void UpdateQuality()
         {
             for (var i = 0; i < Items.Count; i++)
             {
-                if (!IsAgedBrie(Items[i].Name) && !IsBackstagePasses(Items[i].Name))
+                var currentItem = Items[i];
+
+                if (!currentItem.IsAgedBrie() && !currentItem.IsBackstagePasses())
                 {
-                    if (IsNotLegendaryItem(Items[i]))
+                    if (IsNotLegendaryItem(currentItem))
                     {
-                        Items[i].Quality -= 1;
+                        currentItem.DecreaseQuality();
                     }
                 }
                 else
                 {
-                    if (Items[i].Quality < HIGHEST_QUALITY_VALUE)
+                    if (currentItem.Quality < HIGHEST_QUALITY_VALUE)
                     {
-                        Items[i].Quality += 1;
+                        currentItem.IncreaseQuality();
 
-                        if (Items[i].Name == BackStagePasses 
-                            && Items[i].SellIn < 11 
-                            && Items[i].Quality < 50)
+                        if (currentItem.IsBackstagePasses()
+                            && currentItem is { SellIn: < 11, Quality: < 50 })
                         {
-                            Items[i].Quality += 1;
+                            currentItem.IncreaseQuality();
 
-                            if (Items[i].SellIn < 6 && Items[i].Quality < 50)
+                            if (currentItem is { SellIn: < 6, Quality: < 50 })
                             {
-                                Items[i].Quality += 1;
+                                currentItem.IncreaseQuality();
                             }
                         }
                     }
                 }
 
-                if (Items[i].Name != Sulfuras)
+                if (!currentItem.IsSulfuras())
                 {
-                    Items[i].SellIn -= 1;
+                    currentItem.SellIn -= 1;
                 }
 
-                if (Items[i].SellIn < 0)
+                if (currentItem.SellIn < 0)
                 {
-                    if (IsAgedBrie(Items[i].Name))
+                    if (currentItem.IsAgedBrie())
                     {
-                        if (Items[i].Quality < HIGHEST_QUALITY_VALUE)
+                        if (currentItem.Quality < HIGHEST_QUALITY_VALUE)
                         {
-                            Items[i].Quality += 1;
+                            currentItem.IncreaseQuality();
                         }
 
                         continue;
                     }
 
-                    if (!IsBackstagePasses(Items[i].Name))
+                    if (!currentItem.IsBackstagePasses())
                     {
-                        if (IsNotLegendaryItem(Items[i]))
+                        if (IsNotLegendaryItem(currentItem))
                         {
-                            Items[i].Quality -= 1;
+                            currentItem.DecreaseQuality();
                         }
                     }
                     else
                     {
-                        Items[i].Quality = 0;
+                        currentItem.Quality = 0;
                     }
                 }
+
+                Items[i] = currentItem;
             }
         }
-        
-        private bool IsAgedBrie(string name)
-        {
-            return name == AgedBrie;
-        }
 
-        private bool IsBackstagePasses(string name)
-        {
-            return name == BackStagePasses;
-        }
-
-        private bool IsItemQualityGreaterThanLowestQuality(int itemQuality)
+        private static bool IsItemQualityGreaterThanLowestQuality(int itemQuality)
         {
             return itemQuality > LOWEST_QUALITY_VALUE;
         }
 
-        private bool IsNotLegendaryItem(Item item)
+        private static bool IsNotLegendaryItem(Item item)
         {
-            return IsItemQualityGreaterThanLowestQuality(item.Quality) && item.Name != Sulfuras;
+            return IsItemQualityGreaterThanLowestQuality(item.Quality) && !item.IsSulfuras();
         }
     }
 }
