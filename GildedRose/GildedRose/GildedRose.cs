@@ -18,14 +18,14 @@
                 if (Items[i].Name != "Aged Brie" 
                     && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
                 {
-                    if (IsItemQualityGreaterThanLowestQuality(Items[i].Quality) && Items[i].Name != "Sulfuras, Hand of Ragnaros")
+                    if (IsNotLegendaryItem(Items[i]))
                     {
                         Items[i].Quality -= 1;
                     }
                 }
                 else
                 {
-                    if (Items[i].Quality < 50)
+                    if (Items[i].Quality < HIGHEST_QUALITY_VALUE)
                     {
                         Items[i].Quality += 1;
 
@@ -54,7 +54,7 @@
                     {
                         if (Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
                         {
-                            if (IsItemQualityGreaterThanLowestQuality(Items[i].Quality) && Items[i].Name != "Sulfuras, Hand of Ragnaros")
+                            if (IsNotLegendaryItem(Items[i]))
                             {
                                 Items[i].Quality -= 1;
                             }
@@ -78,6 +78,11 @@
         private bool IsItemQualityGreaterThanLowestQuality(int itemQuality)
         {
             return itemQuality > LOWEST_QUALITY_VALUE;
+        }
+
+        private bool IsNotLegendaryItem(Item item)
+        {
+            return IsItemQualityGreaterThanLowestQuality(item.Quality) && item.Name != "Sulfuras, Hand of Ragnaros";
         }
     }
 }
