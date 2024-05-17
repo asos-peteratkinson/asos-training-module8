@@ -11,29 +11,24 @@
             return this.Name + ", " + this.SellIn + ", " + this.Quality;
         }
 
-        public bool IsAgedBrie()
-        {
-            return Name == ItemNames.AgedBrie;
-        }
+        public bool IsLegendary() => IsLessThanHighestQuality() && IsSulfuras();
 
-        public bool IsBackstagePasses()
-        {
-            return Name == ItemNames.BackStagePasses;
-        }
+        public bool IsAgedBrie() => Name == ItemValues.AgedBrie;
 
-        public bool IsSulfuras()
-        {
-            return Name == ItemNames.Sulfuras;
-        }
+        public bool IsBackstagePasses() => Name == ItemValues.BackStagePasses;
 
-        public void IncreaseQuality()
-        {
-            Quality += 1;
-        }
+        public bool IsSulfuras() => Name == ItemValues.Sulfuras;
 
-        public void DecreaseQuality()
-        {
-            Quality -= 1;
-        }
+        public void IncreaseQuality() => Quality += 1;
+
+        public void DecreaseQuality() => Quality -= 1;
+
+        public void ResetQuality() => Quality = 0;
+
+        public void DecreaseSellIn() => SellIn -= 1;
+
+        public bool IsLessThanHighestQuality() => Quality < ItemValues.HighestQualtity;
+
+        private bool IsGreaterThanLowestQualtity() => Quality > ItemValues.LowestQualtity;
     }
 }

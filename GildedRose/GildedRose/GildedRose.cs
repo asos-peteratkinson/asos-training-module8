@@ -40,7 +40,7 @@
 
                 if (!currentItem.IsSulfuras())
                 {
-                    currentItem.SellIn -= 1;
+                    currentItem.DecreaseSellIn();
                 }
 
                 if (currentItem.SellIn < 0)
@@ -64,7 +64,7 @@
                     }
                     else
                     {
-                        currentItem.Quality = 0;
+                        currentItem.ResetQuality();
                     }
                 }
 
