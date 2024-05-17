@@ -11,7 +11,7 @@
             return this.Name + ", " + this.SellIn + ", " + this.Quality;
         }
 
-        public bool IsNotLegendary() => IsGreaterThanLowestQualtity() && !IsSulfuras();
+        public bool IsNotLegendary() => IsGreaterThanLowestQuality() && !IsSulfuras();
 
         public bool IsAgedBrie() => Name == ItemValues.AgedBrie;
 
@@ -41,6 +41,6 @@
 
         public bool IsLessThanHighestQuality() => Quality < ItemValues.HighestQualtity;
 
-        private bool IsGreaterThanLowestQualtity() => Quality > ItemValues.LowestQualtity;
+        private bool IsGreaterThanLowestQuality() => Quality > ItemValues.LowestQualtity;
     }
 }
